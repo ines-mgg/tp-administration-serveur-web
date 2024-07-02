@@ -1,0 +1,26 @@
+- Créer une équipe sur digitalocean
+
+- Sécuriser le serveur en SSH :
+    - Accès à la console en root 
+    - useradd -m croquette
+    - usermod -aG sudo croquette
+    - echo "croquette:teamrocket" | chpasswd 
+    - mkdir /home/croquette/.ssh
+    - cp /root/.ssh/authorized_keys /home/croquette/.ssh/authorized_keys
+    - chown -R croquette:croquette /home/croquette/ 
+    - connection sur le user croquette
+    - sudo vim /etc/ssh/sshd_config 
+    - mettre le mot de passe (teamrocket)
+    - Dans le fichier : 
+        - Changer le port 22 en 2803
+        - PermitRootLogin yes en no
+        - PasswordAuthentification no
+    - sudo systemctl reload sshd
+
+- Installation de Docker (https://docs.docker.com/engine/install/debian/) + Git (sudo apt install git-all)
+    --> sudo usermod -aG docker croquette
+
+- Désactivation Apache2 : 
+    - sudo systemctl stop apache2
+    - sudo systemctl disable apache2
+
