@@ -9,6 +9,7 @@
     - cp /root/.ssh/authorized_keys /home/croquette/.ssh/authorized_keys
     - chown -R croquette:croquette /home/croquette/ 
     - connection sur le user croquette
+    - vérification de la clé cat ~/.ssh/authorized_keys
     - sudo vim /etc/ssh/sshd_config 
     - mettre le mot de passe (teamrocket)
     - Dans le fichier : 
@@ -17,10 +18,13 @@
         - PasswordAuthentification no
     - sudo systemctl reload sshd
 
-- Installation de Docker (https://docs.docker.com/engine/install/debian/) + Git (sudo apt install git-all)
-    --> sudo usermod -aG docker croquette
-
 - Désactivation Apache2 : 
     - sudo systemctl stop apache2
     - sudo systemctl disable apache2
+
+- Installation de Docker (https://www.it-connect.fr/installation-pas-a-pas-de-docker-sur-debian-11/) + Git (sudo apt install git-all)
+    --> sudo usermod -aG docker croquette
+
+- Création du compose.yml avec nginx, database postgresql et adminer
+- Creéation du default.conf
 
