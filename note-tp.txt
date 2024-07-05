@@ -26,5 +26,31 @@
     --> sudo usermod -aG docker croquette
 
 - Création du compose.yml avec nginx, database postgresql et adminer
-- Creéation du default.conf
+- Création du default.conf
 
+- Création d'un accès ssh :
+    --> ssh-keygen -t rsa -b 4096 (génère clé paire de clé ssh en local sur son terminal)
+    --> cat id_ma_cle.pub (affiche le contenu de ma clé publique)
+    --> copier le contenu de ma clé publique nouvellement créée
+    --> se connecter au droplet depuis digitalocean avec notre user 
+    --> vim /.ssh/authorized_keys (ajouter notre clé publique au fichier authorized_keys)
+    --> ssh -i  path/to/my/ssh/key/id_ma_cle croquette@165.227.168.148 -p 2803 (se connecter au droplet depuis son terminal local)
+
+- Configuration d'un sous domaine pour adminer : 
+    --> Depuis digital ocean > Networking > team-croquette.site > Domain > CNAME > ajouter CNAME
+        hostname : adminer
+        alias : @ (team-croquette.site)
+    --> depuis ovh dans Noms de domaine > team-croquette.site > zone DNS > ajouter une entrée
+        type : CNAME 
+        sous domaine : adminer
+        cible : team-croquette.site
+    --> ensuite dans le default.conf rajouter la config suivant :
+        server {
+            listen 80;
+            listen [::]:80;
+            server_name adminer.team-croquette.site;
+
+            location / {
+                proxy_pass http://adminer:8080;
+            }
+        }
