@@ -1,14 +1,21 @@
 services:
   nginx:
     image: nginx:latest
-    environment:
-      - DOMAIN=${DOMAIN}
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./default.conf:/etc/nginx/conf.d/default.conf
       - ./index.html:/var/www/html/index.html
 
+  certbot: 
+    image: certbot/dns-ovh:latest
+    volumes:
+      - ./certbot-config:/etc/letsencrypt
+    entrypoint: /bin/sh
+    command: -c 'certbot certonly --dns-ovh --dns-ovh-credentials /etc/letsencrypt/ovh.credentials -d team-croquette.site -d adminer.team-croquette.site --email admin@localhost.com --agree-tos --non-interactive --force-renewal'
+    depends_on:
+      - nginx
   db: 
     image: postgres
     environment:
@@ -28,3 +35,4 @@ services:
 
 volumes:
   pg-data:
+  certbot-config:
