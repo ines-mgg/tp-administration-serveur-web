@@ -54,3 +54,23 @@
                 proxy_pass http://adminer:8080;
             }
         }
+
+- Configuration de certbot :
+    - Création d'un Dockerfile
+    - Ajout du service certbot au compose.yml
+    - Modification du service nginx
+    - Création du ficher ovh.credentials
+    - Lancement : docker compose build certbot && docker compose up
+
+
+- Renouvellement automatique : 
+    - crontab -e
+    - 0 12 * * 0 docker compose run --rm certbot certbot renew && docker compose restart nginx
+        --> Renouvellement tous les dimanches
+
+
+- Accès HTTPS pour le front et adminer :
+    - Ajout du port 443 au service nginx
+    - Modification des blocs server 80 pour faire une
+        redirection 301
+    - Ajout des blocs server 443 pour sécuriser les accès
