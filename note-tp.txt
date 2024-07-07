@@ -57,8 +57,11 @@
 
 - Configuration de certbot :
     - Création d'un Dockerfile
-    - Ajout du service certbot
+    - Ajout du service certbot au compose.yml
+    - Modification du service nginx
     - Création du ficher ovh.credentials
+    - Lancement : docker compose build certbot && docker compose up
+
 
 - Renouvellement automatique : 
     - crontab -e
