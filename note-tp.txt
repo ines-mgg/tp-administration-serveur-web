@@ -65,8 +65,8 @@
 
 - Renouvellement automatique : 
     - crontab -e
-    - 0 12 * * 0 docker compose run --rm certbot certbot renew && docker compose restart nginx
-        --> Renouvellement tous les dimanches
+    - 0 12 * * * docker compose run --rm certbot && docker compose restart nginx
+        --> Renouvellement tous les jours à minuit
 
 
 - Accès HTTPS pour le front et adminer :
