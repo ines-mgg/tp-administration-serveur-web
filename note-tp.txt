@@ -54,3 +54,15 @@
                 proxy_pass http://adminer:8080;
             }
         }
+
+- Configuration de certbot + accès HTTPS:
+ - Mise à jour du service nginx : 
+    - Ajout des nouveux volumes : 
+        - ./nginx/conf/:/etc/nginx/conf.d/:ro
+        - ./certbot/www/:/var/www/certbot/:ro
+    - Création du fichier nginx/conf/app.conf
+ - Ajout du service certbot
+ - Test certbot : 
+    - docker-compose run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d team-croquette.site
+    - Entrer une adresse mail
+ 
