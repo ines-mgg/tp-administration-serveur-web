@@ -1,0 +1,23 @@
+# our custom conf here
+
+[DEFAULT]
+# ban for 10 minutes
+bantime = 10m
+
+# max times a client can try to authenticate within 10 minutes
+findtime = 10m
+maxretry = 5
+
+[croquette-admin]
+enabled  = true
+filter   = croquette-admin
+logpath  = /nginx/logs/access.log
+maxretry = 3
+bantime  = 2m
+
+[croquette-adminer]
+enabled  = true
+filter   = croquette-adminer
+logpath  = /nginx/logs/adminer-access.log
+maxretry = 3
+bantime  = 5m

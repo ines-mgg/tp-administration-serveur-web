@@ -1,0 +1,23 @@
+2024-07-10 21:04:29,446 fail2ban.server         [144]: INFO    --------------------------------------------------
+2024-07-10 21:04:29,447 fail2ban.server         [144]: INFO    Starting Fail2ban v1.0.2
+2024-07-10 21:04:29,450 fail2ban.observer       [144]: INFO    Observer start...
+2024-07-10 21:04:29,456 fail2ban.database       [144]: INFO    Connected to fail2ban persistent database '/config/fail2ban/fail2ban.sqlite3'
+2024-07-10 21:04:29,464 fail2ban.database       [144]: WARNING New database created. Version '4'
+2024-07-10 21:04:29,465 fail2ban.jail           [144]: INFO    Creating new jail 'croquette-admin'
+2024-07-10 21:04:29,471 fail2ban.jail           [144]: INFO    Jail 'croquette-admin' uses poller {}
+2024-07-10 21:04:29,471 fail2ban.jail           [144]: INFO    Initiated 'polling' backend
+2024-07-10 21:04:29,473 fail2ban.filter         [144]: INFO      maxRetry: 3
+2024-07-10 21:04:29,474 fail2ban.filter         [144]: INFO      findtime: 600
+2024-07-10 21:04:29,474 fail2ban.actions        [144]: INFO      banTime: 120
+2024-07-10 21:04:29,474 fail2ban.filter         [144]: INFO      encoding: UTF-8
+2024-07-10 21:04:29,476 fail2ban.filter         [144]: INFO    Added logfile: '/nginx/logs/access.log' (pos = 0, hash = )
+2024-07-10 21:04:29,476 fail2ban.jail           [144]: INFO    Creating new jail 'croquette-adminer'
+2024-07-10 21:04:29,478 fail2ban.jail           [144]: INFO    Jail 'croquette-adminer' uses poller {}
+2024-07-10 21:04:29,478 fail2ban.jail           [144]: INFO    Initiated 'polling' backend
+2024-07-10 21:04:29,480 fail2ban.filter         [144]: INFO      maxRetry: 3
+2024-07-10 21:04:29,480 fail2ban.filter         [144]: INFO      findtime: 600
+2024-07-10 21:04:29,481 fail2ban.actions        [144]: INFO      banTime: 300
+2024-07-10 21:04:29,481 fail2ban.filter         [144]: INFO      encoding: UTF-8
+2024-07-10 21:04:29,481 fail2ban.filter         [144]: INFO    Added logfile: '/nginx/logs/adminer-access.log' (pos = 0, hash = )
+2024-07-10 21:04:29,484 fail2ban.jail           [144]: INFO    Jail 'croquette-admin' started
+2024-07-10 21:04:29,487 fail2ban.jail           [144]: INFO    Jail 'croquette-adminer' started

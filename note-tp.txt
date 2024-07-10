@@ -70,7 +70,41 @@
 
 
 - Accès HTTPS pour le front et adminer :
-    - Ajout du port 443 au service nginx
+    - Ajout du port 443 au se:qrvice nginx
     - Modification des blocs server 80 pour faire une
         redirection 301
     - Ajout des blocs server 443 pour sécuriser les accès
+
+- Fail2ban
+    - Ajout de fail2ban dans le compose
+    - edit du volume des logs de nginx pour récupérer les logs au même endroit où on veut aller les chercher dans le logpath de fail2ban après
+    - ajout d'un jail.local dans le dossier fail2ban avec les règles de ban
+    - ajout de filtres via regex pour les règles custom dans fail2ban/filter.d/my-custom-conf.conf
+    Nos règles :
+        - sur team-croquette.site : quand on essaie d'acceder 3 fois dans succès team-croquette.site/admin on est ban 2minutes
+        - sur adminer.team-croquette.site : quand on rate son authentification 3 fois on est ban 5min
+    - dans le container de fail2ban les commandes utilisées :
+    - fail2ban-client status : pour montrer tous les jail et le statut global
+    - fail2ban-client status croquette-admin : pour montrer le statut du jail croquette-admin
+    - fail2ban-client set croquette-admin unbanip <ip-address> : unban une adresse IP du jail croquette-admin
+
+    Problème rencontré :
+    Dans les logs l'adresse IP n'est pas la bonne il s'agit en fait de celle du network proxy et non celle du client
+    C'est un problème connu dans la communauté 
+        - https://stackoverflow.com/questions/77739332/nginx-in-docker-shows-wrong-ip-in-remote-addr
+        - https://github.com/moby/moby/issues/15086
+    et après plusieurs passes dessus pas de solution efficace en pratique avec notre config nginx docker 
+    la piste de solution c'était de faire un truc comme ça :
+
+    log_format proxy_log '$http_x_forwarded_for  - $remote_addr [$time_local] '
+                    '"$request" $status $body_bytes_sent '
+                    '"$http_referer" "$http_user_agent" (Proxy: "$proxy_host" "$upstream_addr")';
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    mais pas réussi à mettre la config en place, trop tarabiscoté
