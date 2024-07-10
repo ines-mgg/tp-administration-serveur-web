@@ -108,3 +108,37 @@
     }
 
     mais pas réussi à mettre la config en place, trop tarabiscoté
+
+- SAMBA
+    sudo apt-get update : mise à jour des paquets
+    sudo apt-get install samba : installation de samba
+    sudo systemctl stop smbd.service : stop serveur samba le temps de la config pour eviter de potentiels problèmes de securité
+    sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.orig : renommer en smb.conf.orig et creation d'un nouveau fichier smb.conf
+    ip link : afficher la liste des interfaces réseau disponibles et leur état (up ou down).
+    sudo nano /etc/samba/smb.conf : editer le fichier de conf (la partie global pour l'instant, on place eth0 qui est notre interface réseau externe)
+    sudo mkdir /samba/ : creation du dossier /samba/
+    sudo chown :sambashare /samba/ : owner du group -> sambashare
+    sudo mkdir /samba/erwann : creation du home directory pour le user erwann
+    sudo adduser --home /samba/erwann --no-create-home --shell /usr/sbin/nologin --ingroup sambashare erwann : ajout de erwann en tant que utilisateur system
+    sudo chown erwann:sambashare /samba/erwann/ : attribue le répertoire /samba/erwann/ à l'utilisateur erwann et au groupe sambashare.
+    sudo chmod 2770 /samba/erwann/ : donner l'autorisation des dossiers crées dans le directory du user erwann même si crée par quelqu'un d'autre
+    sudo smbpasswd -a erwann : ajout de l'utilisateur dans le serveur samba
+    sudo smbpasswd -e erwann : activation de l'utilisateur ajouté précédemment
+
+    //Pareil pour créer un utilisateur admin
+    sudo mkdir /samba/everyone
+    sudo adduser --home /samba/everyone --no-create-home --shell /usr/sbin/nologin --ingroup sambashare admin
+    sudo chown admin:sambashare /samba/everyone/
+    sudo chmod 2770 /samba/everyone/
+    sudo smbpasswd -a admin
+    sudo smbpasswd -e admin
+
+    sudo groupadd admins : creation du grp admins
+    sudo usermod -G admins admin : ajout du user admin dans le grp admins
+
+    sudo smbpasswd -a croquette //ajout de notre utilisateur croquette qui a notre repo
+
+    sudo nano /etc/samba/smb.conf : on retourne configurer le partage personnel de chaque utilisateur
+    testparm : pour vérifier que notre config est bonne
+    sudo systemctl start smbd.service : on relance le serveur samba
+    sudo systemctl restart smbd : restart le serveur (je sais pas pourquoi ça ne marchait pas sinon)
